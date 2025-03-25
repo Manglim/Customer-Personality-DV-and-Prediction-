@@ -1,58 +1,53 @@
-🧠 Customer Personality Prediction with TabNet
-Welcome to the Customer Personality Prediction project! This machine learning pipeline combines clustering and deep tabular modeling to segment customers into behavioral “personalities” using marketing and demographic data. It uses KMeans to define clusters and TabNet (a powerful deep learning model for tabular data) to predict those clusters with high accuracy.
+# Customer Personality Analysis with KMeans and TabNet
 
-🚀 Features
-End-to-End Workflow in Python (ready for Kaggle or Jupyter Notebooks)
+## Overview
+This project analyzes customer personalities using a hybrid approach: KMeans clustering to identify five personality types and TabNet to predict these clusters for new customers. It includes data preprocessing, feature engineering, visualization, and prediction, executed in a Kaggle environment.
 
-📊 Feature Engineering for campaign behavior, total spend, family profile, and more
+## Functionality
+1. **Data Preprocessing**:
+   - Loads `/kaggle/input/customer-personality-analysis/marketing_campaign.csv`.
+   - Drops `ID`, `Z_CostContact`, `Z_Revenue`, `Dt_Customer`; fills missing `Income` with median.
+   - Encodes `Education` and `Marital_Status` with `OneHotEncoder`; scales numerical features.
 
-🤖 KMeans Clustering to define customer "personality" types:
+2. **Feature Engineering**:
+   - `TotalChildren`: `Kidhome + Teenhome`.
+   - `TotalSpend`: Sum of spending categories.
+   - `CampaignResponses`: Sum of campaign acceptances.
 
-Balanced Buyer
+3. **Clustering**:
+   - Uses KMeans (5 clusters) to group customers.
+   - Labels: "Balanced Buyer," "Budget Conscious," "High Spender," "Detached Minimalist," "Campaign Enthusiast."
 
-Budget Conscious
+4. **TabNet Classification**:
+   - Trains TabNet to predict KMeans clusters with early stopping.
 
-High Spender
+5. **Visualization**:
+   - Bar plots for average `TotalSpend`, `TotalChildren`, `CampaignResponses`, `Recency`, and `Income` by personality.
 
-Detached Minimalist
+6. **Prediction**:
+   - Predicts personality for new customer data.
 
-Campaign Enthusiast
+## Frameworks and Libraries
+- **Python**: Core language (Kaggle Python 3).
+- **Pandas**: Data handling (`pd`).
+- **NumPy**: Numerical operations (`np`).
+- **Scikit-learn**: `train_test_split`, `StandardScaler`, `KMeans`, `classification_report`.
+- **Category Encoders**: `OneHotEncoder`.
+- **PyTorch TabNet**: `TabNetClassifier`.
+- **Matplotlib**: Plotting (`plt`).
+- **Seaborn**: Visualization (`sns`).
 
-🔥 TabNet Classifier trained to predict cluster using GPU (when available)
+## Dataset
+- Source: [Customer Personality Analysis](https://www.kaggle.com/datasets/imakash3011/customer-personality-analysis).
+- Features: `Year_Birth`, `Education`, `Marital_Status`, `Income`, `Kidhome`, `Teenhome`, spending, campaigns, etc.
 
-📈 Accuracy over 93% on validation data
+## Key Features
+- **Hybrid Learning**: KMeans + TabNet.
+- **Feature Engineering**: Aggregates for better insights.
+- **Visualization**: Interpretable personality profiles.
+- **Scalability**: Handles mixed data types.
 
-📦 Input Predictor: Feed new customer data and get their predicted personality
-
-📊 Visualizations for income, spending, recency, kids, and engagement per personality
-
-📁 Data
-The dataset used is the Marketing Campaign Dataset:
-
-Source: Kaggle → customer-personality-analysis
-
-Format: marketing_campaign.csv
-
-⚙️ Installation
-bash
-Copy
-Edit
-pip install pytorch-tabnet category_encoders scikit-learn pandas numpy matplotlib seaborn
-📌 Usage
-Load and preprocess the dataset
-
-Engineer features
-
-Run KMeans to create 5 clusters
-
-Train the TabNet model to predict cluster labels
-
-Use the built-in input form to predict personality for new customers
-
-📉 Model Performance
-✅ TabNet Accuracy: ~93%
-
-✅ Precision/Recall tracked for each personality
-
-❗Handles missing income, unseen categories, and real-world input edge cases
-
+## Installation
+```bash
+pip install pytorch-tabnet category_encoders
+pip install pandas numpy scikit-learn matplotlib seaborn
